@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WebSockets - Simple chat</title>
+    <style>
+        * {
+            font-family: tahoma, sans-serif;
+            font-size: 12px;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        p {
+            line-height: 18px;
+        }
+
+        div {
+            width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #field {
+            display: flex;
+            flex-wrap: wrap;
+            background: #ddd;
+            height: 600px;
+            width: 600px;
+            justify-content: flex-start;
+        }
+
+        #field > div {
+            width: 200px;
+            height: 200px;
+            background-color: gainsboro;
+            border: 2px solid gray;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #field > .round::before {
+            content: '';
+            display: inline-flex;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            border: 6px solid black;
+        }
+        #field > .square::after {
+            content: '';
+            display: inline-flex;
+            height: 0;
+            width: 100px;
+            border: 3px solid black;
+            transform: rotate(45deg) translate(0, 0);
+        }
+        #field > .square::before {
+            content: '';
+            display: inline-flex;
+            height: 0;
+            width: 100px;
+            border: 3px solid black;
+            transform: rotate(-45deg) translate(-3px, 3px);
+        }
+        #field > .blue::before {
+            border-color: blue;
+        }
+        #field > .blue::after {
+            border-color: blue;
+        }
+        #field > .red::before {
+            border-color: red;
+        }
+        #field > .red::after {
+            border-color: red;
+        }
+        #commander{
+            display: flex;
+            height: 40px;
+            align-items: center;
+        }
+
+        #commander input {
+            border: 1px solid #ccc;
+            padding: 5px;
+            width: 400px;
+        }
+
+        #commander span {
+            width: 88px;
+        }
+    </style>
+</head>
+<body>
+<div id="commander">
+    <span id="status">Connecting...</span>
+    <input type="text" id="input" disabled="disabled" />
+</div>
+<div id="field">
+    <div class="round blue"></div>
+    <div class="square red"></div>
+    <div></div>
+
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<div id="log"></div>
+<script src="./frontend.js"></script>
+</body>
+</html>
