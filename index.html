@@ -41,41 +41,29 @@
             justify-content: center;
             flex-direction: column;
         }
-        #field > .round::before {
+        #field > .o::before {
             content: '';
             display: inline-flex;
             height: 100px;
             width: 100px;
             border-radius: 50%;
-            border: 6px solid black;
+            border: 6px solid red;
         }
-        #field > .square::after {
+        #field > .x::after {
             content: '';
             display: inline-flex;
             height: 0;
             width: 100px;
-            border: 3px solid black;
+            border: 3px solid blue;
             transform: rotate(45deg) translate(0, 0);
         }
-        #field > .square::before {
+        #field > .x::before {
             content: '';
             display: inline-flex;
             height: 0;
             width: 100px;
-            border: 3px solid black;
+            border: 3px solid blue;
             transform: rotate(-45deg) translate(-3px, 3px);
-        }
-        #field > .blue::before {
-            border-color: blue;
-        }
-        #field > .blue::after {
-            border-color: blue;
-        }
-        #field > .red::before {
-            border-color: red;
-        }
-        #field > .red::after {
-            border-color: red;
         }
         #commander{
             display: flex;
@@ -83,14 +71,19 @@
             align-items: center;
         }
 
-        #commander input {
+        #input {
             border: 1px solid #ccc;
             padding: 5px;
-            width: 400px;
+            flex-grow: 1;
         }
 
-        #commander span {
-            width: 88px;
+        #status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #status > b{
+            margin: 0 4px;
         }
     </style>
 </head>
@@ -100,8 +93,8 @@
     <input type="text" id="input" disabled="disabled" />
 </div>
 <div id="field">
-    <div class="round blue"></div>
-    <div class="square red"></div>
+    <div></div>
+    <div></div>
     <div></div>
 
     <div></div>
