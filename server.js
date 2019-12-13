@@ -84,10 +84,56 @@ function mark(id, index) {
     const blockedMessage = `Jogador ${state.name} (${state.type}) tentou marcar na posição ${index} e foi bloqueado.`
     return broadcastHistory(blockedMessage)
   }
-  broadcastData({ type: 'mark', user: state.type, index })
-  broadcastHistory(`Jogador ${state.name} (${state.type}) marcou posição ${index}`)
   game.board[index] = state.type
   game.turn = state.type === 'o' ? 'x' : 'o'
+  broadcastData({ type: 'mark', user: state.type, index })
+  broadcastHistory(`Jogador ${state.name} (${state.type}) marcou posição ${index}`)
+  broadCastIfFinished(state.type)
+}
+
+function broadCastIfFinished(user) {
+  const matrix = boardToMatrix(user)
+
+  const row = matchRow(matrix)
+  if (row >= 0) return broadcastFinish({ user, row })
+
+  const column = matchColumn(matrix)
+  if (column >= 0) return broadcastFinish({ user, column })
+
+  const diagonal = matchDiagonal(matrix)
+  if (diagonal >= 0) return broadcastFinish({ user, diagonal })
+}
+
+function boardToMatrix(player) {
+  const matrix = []
+  for (let i = 0; i < 3; i++) {
+    const row = []
+    for (let j = 0; j < 3; j++) {
+      const field = i * 3 + j
+      const value = game.board[field] === player
+      row.push(Number(value))
+    }
+    matrix.push(row)
+  }
+  return matrix
+}
+
+function matchRow(matrix) {
+  return matrix.findIndex(row => row.every(column => column === 1))
+}
+
+function matchColumn(matrix) {
+  const totals = matrix.reduce((sum, row) => [sum[0] + row[0], sum[1] + row[1], sum[2] + row[2]], [0, 0, 0])
+  return totals.findIndex(columnSum => columnSum === 3)
+}
+
+function matchDiagonal(matrix) {
+  const diagonals = matrix.reduce((d, row, i) => [d[0] + row[i], d[1] + row[2 - i]], [0, 0])
+  return diagonals.findIndex(d => d === 3)
+}
+
+function broadcastFinish(options) {
+  return broadcastData({ type: 'finish', ...options })
 }
 
 function broadcastHistory(message) {

@@ -32,10 +32,12 @@ connection.onmessage = function(message) {
   if (data.type === 'mark') return receiveMark(data)
   if (data.type === 'historyPush') return (log.innerHTML = log.innerHTML + `<div>${data.message}</div>`)
   if (data.type === 'clearBoard') return clearBoard()
+  if (data.type === 'finish') return finishGame(data)
   if (data.type === 'confirm') {
     Object.assign(myState, data.player)
     status.innerHTML = `Seu nome é <b>${myState.name}</b> e você é o jogador <b>${typeName()}</b>`
   }
+
 }
 
 input.addEventListener('keydown', function(e) {
@@ -72,7 +74,6 @@ function clearBoard(){
 
 function receiveMark(data) {
   if (!data.user) return null
-  console.log(data)
   const element = field.querySelectorAll('div')[data.index]
   element.classList.add(data.user)
 }
@@ -84,6 +85,10 @@ function sendMessage(data) {
 function typeName() {
   if (myState.type === 'o') return 'bolinha'
   return 'xis'
+}
+
+function finishGame(data){
+  console.log(data)
 }
 
 setInterval(function() {
